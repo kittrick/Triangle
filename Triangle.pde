@@ -1,3 +1,20 @@
+class Geometric {
+  int pointCount;
+  
+  void Geometric(){
+    pointCount = 3;
+  }
+  
+  void display() {
+    translate(width/2,height/2);
+    beginShape();
+      vertex(pointOne.x, pointOne.y);
+      vertex(pointTwo.x, pointTwo.y);
+      vertex(pointThree.x, pointThree.y);
+    endShape(CLOSE);
+  }
+}
+
 void setup() {
   size(600, 600);
   background(255);
