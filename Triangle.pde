@@ -1,42 +1,54 @@
-class Geometric {
-  int pointCount;
-  
-  void Geometric(){
-    pointCount = 3;
-  }
-  
-  void display() {
-    translate(width/2,height/2);
-    beginShape();
-      vertex(pointOne.x, pointOne.y);
-      vertex(pointTwo.x, pointTwo.y);
-      vertex(pointThree.x, pointThree.y);
-    endShape(CLOSE);
-  }
-}
+ArrayList<KochShape> shapes;
+int vertexCount;
+int kochCount;
+float diameter;
 
 void setup() {
-  size(600, 600);
-  background(255);
+  vertexCount = 3;
+  kochCount = 1;
+  size(600, 600, OPENGL);
+  shapes = new ArrayList<KochShape>();
+  PVector origin = new PVector(width/2, height/2);
+  float diameter = width;
+  shapes.add(new KochShape(origin, diameter));
 }
 
 void draw() {
   background(255);
- 
-  PVector pointOne = new PVector(width/2, 0);
-  PVector center = new PVector(width/2,height/2);
-  pointOne.sub(center);
-  //In this example, after the vector is normalized, it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the pointOne is, the vector will have the same length (50) due to the normalization process.
-  pointOne.normalize();
-  pointOne.mult(width/3);
-  PVector pointTwo = pointOne.get();
-          pointTwo.rotate(radians(120));
-  PVector pointThree = pointTwo.get();
-          pointThree.rotate(radians(120));
-  translate(width/2,height/2);
-  beginShape();
-    vertex(pointOne.x, pointOne.y);
-    vertex(pointTwo.x, pointTwo.y);
-    vertex(pointThree.x, pointThree.y);
-  endShape(CLOSE);
+  translate(width/2, height/2);
+  mouseRotate();
+  mouseScale();
+  for(KochShape s : shapes) {
+    s.display();
+  }
 }
+
+void keyPressed() {
+  if (key == CODED) {
+    if (keyCode == UP) {
+      vertexCount++;
+    } else if (keyCode == DOWN) {
+      if (vertexCount >= 2) {
+        vertexCount--;
+      }
+    } else if (keyCode == RIGHT) {
+      kochCount++;
+    } else if (keyCode == LEFT) {
+      if (kochCount >= 2) {
+        kochCount--;
+      }
+    }
+    println(vertexCount, kochCount);
+  }
+}
+
+void mouseRotate(){
+  int x = mouseX - width/2;
+  rotate(radians(x));
+}
+
+void mouseScale(){
+  int y = mouseY - width/2;
+  scale(map(mouseY, 0, height, 0, 1));
+}
+
