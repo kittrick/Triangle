@@ -17,6 +17,7 @@ void setup() {
 void draw() {
   background(255);
   text("Verticies: " + int(vertexCount), 10, 15);
+  text("Koch Triangles: " + int(kochCount), 10, 30);
   translate(width/2, height/2);
   rotate(radians(float(frameCount)/4));
   mouseRotate();
